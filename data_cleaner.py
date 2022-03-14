@@ -4,9 +4,10 @@ From Extracts
 
 '''
 import pandas as pd
+import re
 
 class Data_Cleaner:
-    path = r'E:\ARA\2022\Semester 1\BCIS303 - IT Governance\Assignment 1\BCIS303_Thematic_Analysis_V3_BrydenJoe.xlsx'
+    path = r'C:\Users\willr\Downloads\Queensland Health System.xlsx'
        
     def get_data(self):
         '''Get's all uncleaned data from required column'''
@@ -15,18 +16,20 @@ class Data_Cleaner:
 
     def clean_data(self):
         '''asfdasfd'''
-        list = self.get_data()
-        invalid_char = "1234567890()"
-        for i in list:
-            for char in invalid_char:
-                i = i.replace(char, ',')
+        result = []
+        for i in self.get_data():
+            # print(i)
+            for j in re.split('\([0-9]\)', str(i)):
+                result.append(j)
+        return result
 
-        return list
 
-
-       
+# TODO remove empty nans and empty items, count list items     
 
 if __name__ == '__main__':
     dc = Data_Cleaner()
     # print(dc.get_data())
     print(dc.clean_data())
+    # dc.clean_data()
+    # for i in dc.clean_data():
+    #     print(i)
