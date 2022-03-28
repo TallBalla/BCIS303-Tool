@@ -4,10 +4,11 @@ From Extracts
 
 '''
 import pandas as pd
+import collections
 import re
 
 class Data_Cleaner:
-    path = r'C:\Users\willr\Downloads\Queensland Health System.xlsx'
+    path = r'C:\Users\willr\Desktop\Queensland Health System.xlsx'
        
     def get_data(self):
         '''Get's all uncleaned data from required column'''
@@ -20,7 +21,13 @@ class Data_Cleaner:
         for i in self.get_data():
             # print(i)
             for j in re.split('\([0-9]\)', str(i)):
-                result.append(j)
+                stripped = j.strip()
+                lowered = stripped.lower()
+                replaced = lowered.replace(',', '')
+                replaced1 = replaced.replace('-', ' ')
+
+                result.append(replaced1)
+        result.sort()
         return result
 
 
@@ -29,7 +36,10 @@ class Data_Cleaner:
 if __name__ == '__main__':
     dc = Data_Cleaner()
     # print(dc.get_data())
-    print(dc.clean_data())
+    counter=collections.Counter(dc.clean_data())
+    for key in counter:
+        print(key, ':', counter[key])
+
     # dc.clean_data()
     # for i in dc.clean_data():
     #     print(i)
